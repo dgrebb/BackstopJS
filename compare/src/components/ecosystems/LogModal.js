@@ -37,6 +37,7 @@ const ButtonClose = styled.button`
   width: 30px;
   height: 30px;
   background-image: url(${iconClose});
+  filter: var(--imageFilter);
   background-size: 100%;
   background-repeat: no-repeat;
   background-color: transparent;

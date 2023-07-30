@@ -9,6 +9,7 @@ const Input = styled.input`
   display: block;
   height: 100%;
   border: none;
+  color: ${colors.primaryText};
   font-size: 16px;
   background-color: ${colors.lightGray};
   padding: 0 10px 0 55px;
@@ -30,7 +31,7 @@ const Input = styled.input`
     font-family: ${fonts.arial};
     font-weight: 400;
     font-style: italic;
-    color: ${colors.secondaryText};
+    color: ${colors.lightGray};
   }
 `;
 

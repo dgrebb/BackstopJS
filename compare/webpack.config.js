@@ -9,8 +9,23 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.(js|jsx)$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.(png|jpg|gif)$/, loader: 'url-loader', options: { limit: 8192 } }
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [['@babel/preset-env', { targets: 'defaults' }]]
+          }
+        }
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: {
+          loader: 'url-loader',
+          options: { limit: 8192 }
+        }
+      }
     ]
   }
 };

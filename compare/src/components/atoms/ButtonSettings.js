@@ -34,6 +34,7 @@ const Button = styled.button`
     width: 18px;
     display: block;
     background-image: url(${settingsIcon});
+    filter: var(--imageFilter);
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center;

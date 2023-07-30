@@ -14,8 +14,9 @@ const Wrapper = styled.div`
 `;
 
 const ButtonNav = styled.div`
-  background-color: ${colors.lightGray};
+  background-color: ${colors.white};
   background-image: url(${iconDown});
+  filter: var(--imageFilter);
   background-repeat: no-repeat;
   background-position: center center;
   color: ${colors.secondaryText};
@@ -29,7 +30,7 @@ const ButtonNav = styled.div`
 
   &:hover {
     cursor: ${props => (props.disabled ? '' : 'pointer')};
-    background-color: ${props => (props.disabled ? `${colors.lightGray}` : `${colors.medGray}`)};
+    background-color: ${props => (props.disabled ? `${colors.medGray}` : `${colors.lightGray}`)};
   }
 `;
 

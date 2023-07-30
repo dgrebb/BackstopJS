@@ -6,6 +6,7 @@ import LogoImg from '../../assets/images/logo.png';
 const LogoImage = styled.img`
   display: block;
   height: 35px;
+  filter: var(--imageFilter);
 `;
 
 export default class Logo extends React.Component {
