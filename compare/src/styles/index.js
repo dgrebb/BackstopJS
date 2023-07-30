@@ -1,14 +1,19 @@
 export const colors = {
-  primaryText: '#4A4A4A',
-  bodyColor: '#E2E7EA',
-  secondaryText: '#787878',
-  borderGray: '#D1D9DD',
-  green: '#8BC34A',
-  red: '#F44336',
-  white: '#FFFFFF',
-  cardWhite: '#FAFAFA',
-  lightGray: '#EEEEEE',
-  medGray: '#999999'
+  themeBase: 'var(--themeBase)',
+  primaryText: 'var(--primaryText)',
+  bodyColor: 'var(--bodyColor)',
+  secondaryText: 'var(--secondaryText)',
+  borderGray: 'var(--borderGray)',
+  green: 'var(--green)',
+  red: 'var(--red)',
+  white: 'var(--white)',
+  black: 'var(--black)',
+  darkestBG: 'var(--darkestBG)',
+  darkerBG: 'var(--darkerBG)',
+  darkBG: 'var(--darkBG)',
+  cardWhite: 'var(--cardWhite)',
+  lightGray: 'var(--lightGray)',
+  medGray: 'var(--medGray)'
 };
 
 export const fonts = {

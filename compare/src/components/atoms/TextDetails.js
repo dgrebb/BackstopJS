@@ -31,7 +31,7 @@ const Value = styled.span`
 const DetailsPanel = styled.div`
   display: ${props => (props.showPanel ? 'block' : 'none')};
   position: absolute;
-  background-color: ${colors.white};
+  background-color: ${colors.darkerBG};
   padding: 10px;
   top: -28px;
   left: 20px;
