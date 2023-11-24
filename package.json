@@ -9,7 +9,7 @@
   "type": "commonjs",
   "engines": {
     "node": ">=16.0.0 <=20.x.x",
-    "npm": ">=6.0.0"
+    "npm": ">=8.0.0"
   },
   "scripts": {
     "lint": "eslint \"compare/*.js\" \"compare/src/**/*.js\" \"core/**/*.js\" \"cli/**/*.js\" \"capture/**/*.js\" \"test/**/*.js\"",
