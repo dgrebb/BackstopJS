@@ -111,4 +111,4 @@ jobs:
 
       - name: 🎭 Playwright Sanity
         run: |
-          cd test/configs/ && docker run --rm -t --entrypoint='' --mount type=bind,source="$(pwd)",target=/src $REGISTRY/$IMAGE_NAME_LC:$TAG sh -c "chmod -R 777 /root && chmod -R 777 /opt/pw-browsers && npm --verbose --foreground-scripts i -D playwright && npx --verbose --foreground-scripts --yes playwright@$PLAYWRIGHT_VERSION install --with-deps && backstop test --config=playwright"
+          cd test/configs/ && docker run --rm -t --entrypoint='' --mount type=bind,source="$(pwd)",target=/src $REGISTRY/$IMAGE_NAME_LC:$TAG sh -c "chmod -R 777 /root && chmod -R 777 /opt/pw-browsers && npm --verbose --foreground-scripts i -D playwright && npx --verbose --foreground-scripts --yes playwright@$PLAYWRIGHT_VERSION install && backstop test --config=playwright"
