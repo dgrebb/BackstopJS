@@ -31,6 +31,6 @@ jobs:
       - name: ↧ Install
         run: npm ci
 
-      - name: 🧪 Test
+      - name: "𓋏 Run `npm run integration-test`"
         run: |
           npm run integration-test
