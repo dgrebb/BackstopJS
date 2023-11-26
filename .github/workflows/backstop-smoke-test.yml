@@ -58,4 +58,5 @@ jobs:
       - name: 🎭 Playwright Smoke
         continue-on-error: true
         run: |
+          npx playwright install --with-deps
           npm run smoke-test-playwright
