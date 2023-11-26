@@ -27,7 +27,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref || github.ref }}
@@ -48,7 +48,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: ⬢ Setup Node & Cache
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           cache: "npm"
           cache-dependency-path: package-lock.json
@@ -75,7 +75,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref || github.ref }}
@@ -96,7 +96,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: ⬢ Setup Node & Cache
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           cache: "npm"
           cache-dependency-path: package-lock.json
@@ -111,4 +111,4 @@ jobs:
       - name: 🎭 Playwright Smoke
         continue-on-error: true
         run: |
-          cd test/configs/ && docker run --rm -t --entrypoint='' --mount type=bind,source="$(pwd)",target=/src $REGISTRY/$IMAGE_NAME_LC:$TAG sh -c "npm -g config set user root && chmod -R 777 /root && chmod -R 777 /opt/pw-browsers && npm i -D playwright && npx --allow-root --yes playwright@$PLAYWRIGHT_VERSION install --with-deps && backstop test --config=backstop_features_pw"
+          cd test/configs/ && docker run --rm -t --entrypoint='' --mount type=bind,source="$(pwd)",target=/src $REGISTRY/$IMAGE_NAME_LC:$TAG sh -c "npm -g config set user root && chmod -R 777 /root && chmod -R 777 /opt/pw-browsers && npm i -D playwright && npx --yes playwright@$PLAYWRIGHT_VERSION install --with-deps && backstop test --config=backstop_features_pw"
