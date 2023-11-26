@@ -18,7 +18,7 @@ env:
 
 jobs:
   smoke-test-puppeteer:
-    name: 💨 Puppeteer Smoke
+    name: 💨 Puppeteer
     runs-on: ubuntu-latest
 
     permissions:
@@ -60,13 +60,13 @@ jobs:
         run: |
           docker pull $REGISTRY/$IMAGE_NAME_LC:$TAG
 
-      - name: 🧸 Puppeteer Smoke
+      - name: "𓋏 Run `backstop test --confg=backstop_features` in Docker"
         continue-on-error: true
         run: |
           cd test/configs/ && docker run --rm -t --mount type=bind,source="$(pwd)",target=/src $REGISTRY/$IMAGE_NAME_LC:$TAG test --config=backstop_features
 
   smoke-test-playwright:
-    name: 💨 Playwright Smoke
+    name: 💨 Playwright
     runs-on: ubuntu-latest
 
     permissions:
@@ -108,7 +108,7 @@ jobs:
         run: |
           docker pull $REGISTRY/$IMAGE_NAME_LC:$TAG
 
-      - name: 🎭 Playwright Smoke
+      - name: "🎭 Run `backstop test --confg=backstop_features_pw` in Docker"
         continue-on-error: true
         run: |
           cd test/configs/ && docker run --rm -t --entrypoint='' --mount type=bind,source="$(pwd)",target=/src $REGISTRY/$IMAGE_NAME_LC:$TAG sh -c "npm -g config set user root && chmod -R 777 /root && chmod -R 777 /opt/pw-browsers && npm --verbose i -D playwright && npx --verbose --foreground-scripts --yes playwright@$PLAYWRIGHT_VERSION install && backstop test --config=backstop_features_pw"
