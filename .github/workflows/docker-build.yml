@@ -50,19 +50,19 @@ jobs:
           cache-dependency-path: package-lock.json
 
       - name: ↧ Install
-        run: npm ci
+        run: npm ci --verbose --foreground-scripts
 
       - name: 🐳 Build Docker Builder
         run: |
-          npm run init-docker-builder
+          npm run --verbose --foreground-scripts init-docker-builder
 
       - name: 🐳 Build Docker
         run: |
-          npm run build-docker
+          npm run --verbose --foreground-scripts build-docker
 
       - name: 🐳 Load Docker
         run: |
-          npm run load-docker
+          npm run --verbose --foreground-scripts load-docker
 
       - name: 🐳 Push to ghcr.io
         run: |
