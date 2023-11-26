@@ -12,9 +12,9 @@ permissions:
 
 jobs:
   sanity-test:
-    name: 💨 Smoke Test Docker
+    name: 💨 Docker Smoke Test
     uses: ./.github/workflows/docker-smoke-test.yml
 
   smoke-test:
-    name: 🤪 Sanity Test Docker
+    name: 🤪 Docker Sanity Test
     uses: ./.github/workflows/docker-sanity-test.yml
