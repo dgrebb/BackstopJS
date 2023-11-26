@@ -56,4 +56,5 @@ jobs:
 
       - name: 🎭 Test Playwright
         run: |
+          npx playwright install --with-deps
           npm run sanity-test-playwright
