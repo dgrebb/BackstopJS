@@ -28,6 +28,7 @@
     "smoke-test": "cd test/configs/ && node ../../cli/index.js test --config=backstop_features && npm run -s success-message || npm run -s caution-message",
     "smoke-test-playwright": "cd test/configs/ && node ../../cli/index.js test --config=backstop_features_pw",
     "smoke-test-docker": "cd test/configs/ && node ../../cli/index.js test --config=backstop_features --docker",
+    "smoke-test-docker-playwright": "cd test/configs/ && node ../../cli/index.js test --config=backstop_features_pw --docker",
     "sanity-test": "cd test/configs/ && node ../../cli/index.js test",
     "sanity-test-docker": "cd test/configs/ && node ../../cli/index.js test --docker",
     "sanity-test-playwright-docker": "cd test/configs/ && node ../../cli/index.js test --config=playwright --docker",
