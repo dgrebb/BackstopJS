@@ -56,15 +56,15 @@ jobs:
         run: |
           npm run --verbose --foreground-scripts init-docker-builder
 
-      - name: 🐳 Build Docker
+      - name: 🐳 Build & Push Docker
         run: |
-          npm run --verbose --foreground-scripts build-docker
+          docker buildx build --push --platform linux/amd64,linux/arm64 -t $REGISTRY/$IMAGE_NAME_LC:$TAG --build-arg BACKSTOPJS_VERSION=$PV docker
 
-      - name: 🐳 Load Docker
-        run: |
-          npm run --verbose --foreground-scripts load-docker
+      # - name: 🐳 Load Docker
+      #   run: |
+      #     npm run --verbose --foreground-scripts load-docker
 
-      - name: 🐳 Push to ghcr.io
-        run: |
-          docker tag backstopjs/backstopjs:$PV $REGISTRY/$IMAGE_NAME_LC:$TAG
-          docker push $REGISTRY/$IMAGE_NAME_LC:$TAG
+      # - name: 🐳 Push to ghcr.io
+      #   run: |
+      #     docker tag backstopjs/backstopjs:$PV $REGISTRY/$IMAGE_NAME_LC:$TAG
+      #     docker push $REGISTRY/$IMAGE_NAME_LC:$TAG
