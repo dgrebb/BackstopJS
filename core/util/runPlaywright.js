@@ -101,7 +101,6 @@ module.exports.createPlaywrightBrowser = async function (config) {
         : typeof headless === 'boolean' ? headless : typeof headless === 'string' ? headless === 'new' ? true : headless : true
     }
   );
-  console.log('🚀 ~ file: runPlaywright.js:55 ~ playwrightArgs:', playwrightArgs);
   return await playwright[browserChoice].launch(playwrightArgs);
 };
 
