@@ -37,6 +37,16 @@ jobs:
         run: |
           npm run smoke-test
 
+      - name: "Validate Puppeteer Test Results"
+        run: |
+          diff -q <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/__fixtures__/smoke-test.json) \
+            <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/configs/backstop_data/bitmaps_test/**/report.json) 1>/dev/null
+          if [[ $? == "0" ]]; then
+            exit 0
+          else
+            exit 1
+          fi
+
   smoke-playwright:
     name: 💨 Playwright
     runs-on: ubuntu-latest
@@ -61,3 +71,13 @@ jobs:
         run: |
           npx playwright install --with-deps
           npm run smoke-test-playwright
+
+      - name: "Validate Playwright Test Results"
+        run: |
+          diff -q <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/__fixtures__/smoke-test-playwright.json) \
+            <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/configs/backstop_data/bitmaps_test/**/report.json) 1>/dev/null
+          if [[ $? == "0" ]]; then
+            exit 0
+          else
+            exit 1
+          fi

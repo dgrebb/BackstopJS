@@ -66,6 +66,16 @@ jobs:
         run: |
           cd test/configs/ && docker run --rm -t --mount type=bind,source="$(pwd)",target=/src $REGISTRY/$IMAGE_NAME_LC:$TAG test --config=backstop_features
 
+      - name: "Validate Puppeteer Test Results"
+        run: |
+          diff -q <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/__fixtures__/smoke-test-docker.json) \
+            <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/configs/backstop_data/bitmaps_test/**/report.json) 1>/dev/null
+          if [[ $? == "0" ]]; then
+            exit 0
+          else
+            exit 1
+          fi
+
   smoke-test-playwright:
     name: 💨 Playwright
     runs-on: ubuntu-latest
@@ -113,3 +123,13 @@ jobs:
         continue-on-error: true
         run: |
           cd test/configs/ && docker run --rm -t --entrypoint='' --mount type=bind,source="$(pwd)",target=/src $REGISTRY/$IMAGE_NAME_LC:$TAG sh -c "chmod -R 777 /root && chmod -R 777 /opt/pw-browsers && npm --verbose i -D playwright && npx --verbose --foreground-scripts --yes playwright@$PLAYWRIGHT_VERSION install && backstop test --config=backstop_features_pw"
+
+      - name: "Validate Playwright Test Results"
+        run: |
+          diff -q <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/__fixtures__/smoke-test-playwright-docker.json) \
+            <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/configs/backstop_data/bitmaps_test/**/report.json) 1>/dev/null
+          if [[ $? == "0" ]]; then
+            exit 0
+          else
+            exit 1
+          fi
