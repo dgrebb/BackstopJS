@@ -4,7 +4,7 @@
     {
       "pair": {
         "reference": "../bitmaps_reference/backstop_playwright_BackstopJS_Homepage_0_document_0_phone.png",
-        "test": "../bitmaps_test/20231231-213741/backstop_playwright_BackstopJS_Homepage_0_document_0_phone.png",
+        "test": "../bitmaps_test/20240101-165143/backstop_playwright_BackstopJS_Homepage_0_document_0_phone.png",
         "selector": "document",
         "fileName": "backstop_playwright_BackstopJS_Homepage_0_document_0_phone.png",
         "label": "BackstopJS Homepage",
@@ -24,14 +24,14 @@
           "misMatchPercentage": "3.70",
           "analysisTime": 13
         },
-        "diffImage": "../bitmaps_test/20231231-213741/failed_diff_backstop_playwright_BackstopJS_Homepage_0_document_0_phone.png"
+        "diffImage": "../bitmaps_test/20240101-165143/failed_diff_backstop_playwright_BackstopJS_Homepage_0_document_0_phone.png"
       },
       "status": "fail"
     },
     {
       "pair": {
         "reference": "../bitmaps_reference/backstop_playwright_BackstopJS_Homepage_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20231231-213741/backstop_playwright_BackstopJS_Homepage_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20240101-165143/backstop_playwright_BackstopJS_Homepage_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "backstop_playwright_BackstopJS_Homepage_0_document_1_tablet.png",
         "label": "BackstopJS Homepage",
@@ -51,7 +51,7 @@
           "misMatchPercentage": "1.94",
           "analysisTime": 35
         },
-        "diffImage": "../bitmaps_test/20231231-213741/failed_diff_backstop_playwright_BackstopJS_Homepage_0_document_1_tablet.png"
+        "diffImage": "../bitmaps_test/20240101-165143/failed_diff_backstop_playwright_BackstopJS_Homepage_0_document_1_tablet.png"
       },
       "status": "fail"
     }

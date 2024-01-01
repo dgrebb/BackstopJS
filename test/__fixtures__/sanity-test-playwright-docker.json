@@ -4,7 +4,7 @@
     {
       "pair": {
         "reference": "../bitmaps_reference/backstop_playwright_BackstopJS_Homepage_0_document_0_phone.png",
-        "test": "../bitmaps_test/20240101-030103/backstop_playwright_BackstopJS_Homepage_0_document_0_phone.png",
+        "test": "../bitmaps_test/20240101-215718/backstop_playwright_BackstopJS_Homepage_0_document_0_phone.png",
         "selector": "document",
         "fileName": "backstop_playwright_BackstopJS_Homepage_0_document_0_phone.png",
         "label": "BackstopJS Homepage",
@@ -24,14 +24,14 @@
           "misMatchPercentage": "0.33",
           "analysisTime": 17
         },
-        "diffImage": "../bitmaps_test/20240101-030103/failed_diff_backstop_playwright_BackstopJS_Homepage_0_document_0_phone.png"
+        "diffImage": "../bitmaps_test/20240101-215718/failed_diff_backstop_playwright_BackstopJS_Homepage_0_document_0_phone.png"
       },
       "status": "fail"
     },
     {
       "pair": {
         "reference": "../bitmaps_reference/backstop_playwright_BackstopJS_Homepage_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20240101-030103/backstop_playwright_BackstopJS_Homepage_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20240101-215718/backstop_playwright_BackstopJS_Homepage_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "backstop_playwright_BackstopJS_Homepage_0_document_1_tablet.png",
         "label": "BackstopJS Homepage",
@@ -49,9 +49,9 @@
           },
           "rawMisMatchPercentage": 0.3016973834988541,
           "misMatchPercentage": "0.30",
-          "analysisTime": 38
+          "analysisTime": 36
         },
-        "diffImage": "../bitmaps_test/20240101-030103/failed_diff_backstop_playwright_BackstopJS_Homepage_0_document_1_tablet.png"
+        "diffImage": "../bitmaps_test/20240101-215718/failed_diff_backstop_playwright_BackstopJS_Homepage_0_document_1_tablet.png"
       },
       "status": "fail"
     }
