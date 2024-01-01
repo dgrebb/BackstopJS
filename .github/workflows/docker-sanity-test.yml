@@ -67,13 +67,17 @@ jobs:
         run: |
           cd test/configs/ && docker run --rm -t --mount type=bind,source="$(pwd)",target=/src $REGISTRY/$IMAGE_NAME_LC:$TAG test
 
-      - name: "Validate Puppeteer Test Results"
+      - name: "Validate Puppeteer Docker Test Results"
         run: |
           diff -q <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/__fixtures__/sanity-test-docker.json) \
             <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/configs/backstop_data/bitmaps_test/**/report.json) 1>/dev/null
           if [[ $? == "0" ]]; then
+            echo "# ✅ Puppeteer Docker Sanity Test Valid" >> $GITHUB_STEP_SUMMARY
             exit 0
           else
+            RESULT=$(diff -c <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/__fixtures__/sanity-test-docker.json) <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/configs/backstop_data/bitmaps_test/**/report.json))
+            echo "# Puppeteer Docker Sanity Validation Diff" >> $GITHUB_STEP_SUMMARY
+            echo "${RESULT}" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
 
@@ -126,12 +130,16 @@ jobs:
         run: |
           cd test/configs/ && docker run --rm -t --entrypoint='' --mount type=bind,source="$(pwd)",target=/src $REGISTRY/$IMAGE_NAME_LC:$TAG sh -c "chmod -R 777 /root && chmod -R 777 /opt/pw-browsers && npm --verbose --foreground-scripts i -D playwright && npx --verbose --foreground-scripts --yes playwright@$PLAYWRIGHT_VERSION install && backstop test --config=playwright"
 
-      - name: "Validate Playwright Test Results"
+      - name: "Validate Playwright Docker Test Results"
         run: |
           diff -q <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/__fixtures__/sanity-test-playwright-docker.json) \
             <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/configs/backstop_data/bitmaps_test/**/report.json) 1>/dev/null
           if [[ $? == "0" ]]; then
+            echo "# ✅ Playwright Docker Sanity Test Valid" >> $GITHUB_STEP_SUMMARY
             exit 0
           else
+            RESULT=$(diff -c <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/__fixtures__/sanity-test-playwright-docker.json) <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/configs/backstop_data/bitmaps_test/**/report.json))
+            echo "# Playwright Docker Sanity Validation Diff" >> $GITHUB_STEP_SUMMARY
+            echo "${RESULT}" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi

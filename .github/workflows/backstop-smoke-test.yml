@@ -42,8 +42,13 @@ jobs:
           diff -q <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/__fixtures__/smoke-test.json) \
             <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/configs/backstop_data/bitmaps_test/**/report.json) 1>/dev/null
           if [[ $? == "0" ]]; then
+            echo "# ✅ Puppeteer Smoke Test Valid" >> $GITHUB_STEP_SUMMARY
             exit 0
           else
+            RESULT=$(diff -c <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/__fixtures__/smoke-test-playwright.json) \
+            <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/configs/backstop_data/bitmaps_test/**/report.json))
+            echo "# Puppeteer Smoke Validation Results" >> $GITHUB_STEP_SUMMARY
+            echo "${RESULT}" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
 
@@ -77,7 +82,11 @@ jobs:
           diff -q <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/__fixtures__/smoke-test-playwright.json) \
             <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/configs/backstop_data/bitmaps_test/**/report.json) 1>/dev/null
           if [[ $? == "0" ]]; then
+            echo "# ✅ Playwright Smoke Test Valid" >> $GITHUB_STEP_SUMMARY
             exit 0
           else
+            RESULT=$(diff -c <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/__fixtures__/smoke-test-playwright.json) <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/configs/backstop_data/bitmaps_test/**/report.json))
+            echo "# Playwright Smoke Validation Diff" >> $GITHUB_STEP_SUMMARY
+            echo "${RESULT}" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
