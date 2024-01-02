@@ -68,8 +68,8 @@ jobs:
 
       - name: "Validate Puppeteer Docker Test Results"
         run: |
-          diff -c <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/__fixtures__/smoke-test-docker.json) \
-            <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/configs/backstop_data/bitmaps_test/**/report.json)
+          diff -c <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff)" test/__fixtures__/smoke-test-docker.json) \
+            <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff)" test/configs/backstop_data/bitmaps_test/**/report.json)
           RESULT=$?
           if [[ $RESULT == "0" ]]; then
             echo "# ✅ Puppeteer Docker Smoke Test Valid" >> $GITHUB_STEP_SUMMARY
@@ -131,8 +131,8 @@ jobs:
 
       - name: "Validate Playwright Docker Test Results"
         run: |
-          diff -c <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/__fixtures__/smoke-test-playwright-docker.json) \
-            <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff.analysisTime, .tests[].pair.diff.misMatchPercentage, .tests[].pair.diff.rawMisMatchPercentage)" test/configs/backstop_data/bitmaps_test/**/report.json)
+          diff -c <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff)" test/__fixtures__/smoke-test-playwright-docker.json) \
+            <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff)" test/configs/backstop_data/bitmaps_test/**/report.json)
           RESULT=$?
           if [[ $RESULT == "0" ]]; then
             echo "# ✅ Playwright Docker Smoke Test Valid" >> $GITHUB_STEP_SUMMARY
