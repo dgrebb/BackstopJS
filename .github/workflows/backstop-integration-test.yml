@@ -37,17 +37,20 @@ jobs:
           npm run integration-test
 
       - name: "Validate Playwright Test Results"
-
+        continue-on-error: true
         run: |
           diff -c <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff)" test/__fixtures__/integration-test.json) \
             <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff)" integrationTestDir/backstop_data/bitmaps_test/**/report.json)
-          RESULT=$?
+          RESULT=$?" >> $GITHUB_ENV
           if [[ $RESULT == "0" ]]; then
             echo "# ✅ BackstopJS Integration Test Valid" >> $GITHUB_STEP_SUMMARY
-            echo "${RESULT}" >> $GITHUB_STEP_SUMMARY
-            exit 0
+            echo "```diff\n${RESULT}\n```" >> $GITHUB_STEP_SUMMARY
           else
-            echo "#  BackstopJS Integration Validation Diff" >> $GITHUB_STEP_SUMMARY
-            echo "```diff\n${RESULT}\n```" >> $GITHUB_STEP_SUMMARY \
-            && exit 1
+            echo "# ❎ BackstopJS Integration Invalid - Differences:" >> $GITHUB_STEP_SUMMARY
+            echo "```diff\n${RESULT}\n```" >> $GITHUB_STEP_SUMMARY
           fi
+
+      - name: "Test Results Failed Validation"
+        if: failure()
+        run: |
+          exit 1
