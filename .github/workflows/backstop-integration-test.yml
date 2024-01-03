@@ -53,7 +53,7 @@ jobs:
 
       - name: "Test Results Validation Outcome"
         run: |
-          if [[ $RESULT == "0" ]]; then
+          if [[ $RESULT == "" ]]; then
             exit 0
           else
             exit 1
