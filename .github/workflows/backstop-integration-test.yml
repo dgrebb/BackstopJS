@@ -36,12 +36,18 @@ jobs:
         run: |
           npm run integration-test
 
-      - name: "Validate Playwright Test Results"
+      - name: "Validate Integration Test Results"
         id: validate
         continue-on-error: true
         run: |
           RESULT=$(diff -c <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff)" test/__fixtures__/integration-test.json) \
             <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff)" integrationTestDir/backstop_data/bitmaps_test/**/report.json))
+          echo "RESULT=$RESULT" >> $GITHUB_ENV
+
+      - name: "Summarize"
+        env:
+          RESULT: ${{ env.RESULT }}
+        run: |
           if [[ $RESULT == "0" ]]; then
             echo "# ✅ Integration Test Results Validated" >> $GITHUB_STEP_SUMMARY
           else
