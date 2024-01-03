@@ -52,8 +52,10 @@ jobs:
           echo "${RESULT}" >> $GITHUB_STEP_SUMMARY
           echo '```'
 
-      - name: "Test Results Failed Validation"
-        if: steps.validate.outcome != 'success'
+      - name: "Test Results Validation Outcome"
         run: |
-          set -e
-          exit 1
+          if [[ $RESULT == "0" ]]; then
+            exit 0
+          else
+            exit 1
+          fi
