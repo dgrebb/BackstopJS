@@ -45,8 +45,6 @@ jobs:
           echo "RESULT=$RESULT" >> $GITHUB_ENV
 
       - name: "Summarize"
-        env:
-          RESULT: ${{ env.RESULT }}
         run: |
           if [[ $RESULT == "0" ]]; then
             echo "# ✅ Integration Test Results Validated" >> $GITHUB_STEP_SUMMARY
