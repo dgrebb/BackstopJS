@@ -46,10 +46,10 @@ jobs:
             echo "# ✅ Integration Test Results Validated" >> $GITHUB_STEP_SUMMARY
           else
             echo "# ❎ Integration Test Results Invalid — Differences:" >> $GITHUB_STEP_SUMMARY
+            echo '```diff' >> $GITHUB_STEP_SUMMARY
+            echo "${RESULT}" >> $GITHUB_STEP_SUMMARY
+            echo '```'
           fi
-          echo '```diff' >> $GITHUB_STEP_SUMMARY
-          echo "${RESULT}" >> $GITHUB_STEP_SUMMARY
-          echo '```'
 
       - name: "Test Results Validation Outcome"
         run: |
