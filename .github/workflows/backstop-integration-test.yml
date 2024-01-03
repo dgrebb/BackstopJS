@@ -45,11 +45,12 @@ jobs:
           RESULT=$?
           if [[ $RESULT == "0" ]]; then
             echo "# ✅ BackstopJS Integration Test Valid" >> $GITHUB_STEP_SUMMARY
-            echo "```diff\n${RESULT}\n```" >> $GITHUB_STEP_SUMMARY
           else
             echo "# ❎ BackstopJS Integration Invalid - Differences:" >> $GITHUB_STEP_SUMMARY
-            echo "```diff\n${RESULT}\n```" >> $GITHUB_STEP_SUMMARY
           fi
+          echo "```diff" >> $GITHUB_STEP_SUMMARY
+          echo "${RESULT}\n```" >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
 
       - name: "Test Results Failed Validation"
         if: steps.validate.outcome != 'success'
