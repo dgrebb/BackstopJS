@@ -40,6 +40,7 @@ jobs:
         id: validate
         continue-on-error: true
         run: |
+          set +e
           RESULT=$(diff -c <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff)" test/__fixtures__/integration-test.json) \
             <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff)" integrationTestDir/backstop_data/bitmaps_test/**/report.json))
           if [[ $RESULT == "0" ]]; then
