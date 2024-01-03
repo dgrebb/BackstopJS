@@ -42,7 +42,8 @@ jobs:
         run: |
           diff -c <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff)" test/__fixtures__/integration-test.json) \
             <(jq -S ". | del(.tests[].pair.test, .tests[].pair.testLog, .tests[].pair.diffImage, .tests[].pair.diff)" integrationTestDir/backstop_data/bitmaps_test/**/report.json))
-          echo "RESULT=${?}" >> $GITHUB_ENV
+          RESULT=$?
+          echo "RESULT=$RESULT" >> $GITHUB_ENV
 
       - name: "Summarize"
         run: |
