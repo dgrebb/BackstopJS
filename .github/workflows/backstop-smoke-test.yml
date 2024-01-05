@@ -49,8 +49,8 @@ jobs:
           else
             echo "# ❎ Puppeteer Test Results Invalid — Differences:" >> $GITHUB_STEP_SUMMARY
             echo '```diff' >> $GITHUB_STEP_SUMMARY
-            echo $(diff -c <(jq -S . test/__fixtures__/smoke-test.json) \
-            <(jq -S . test/configs/backstop_data/bitmaps_test/**/report.json)) >> $GITHUB_STEP_SUMMARY
+            echo "$(diff -c <(jq -S . test/__fixtures__/smoke-test.json) \
+            <(jq -S . test/configs/backstop_data/bitmaps_test/**/report.json))" >> $GITHUB_STEP_SUMMARY
             echo '```'
           fi
 
@@ -99,8 +99,8 @@ jobs:
           else
             echo "# ❎ Playwright Test Results Invalid — Differences:" >> $GITHUB_STEP_SUMMARY
             echo '```diff' >> $GITHUB_STEP_SUMMARY
-            echo $(diff -c <(jq -S . test/__fixtures__/smoke-test-playwright.json) \
-            <(jq -S . test/configs/backstop_data/bitmaps_test/**/report.json)) >> $GITHUB_STEP_SUMMARY
+            echo "$(diff -c <(jq -S . test/__fixtures__/smoke-test-playwright.json) \
+            <(jq -S . test/configs/backstop_data/bitmaps_test/**/report.json))" >> $GITHUB_STEP_SUMMARY
             echo '```'
           fi
 
