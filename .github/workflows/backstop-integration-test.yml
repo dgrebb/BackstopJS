@@ -43,13 +43,21 @@ jobs:
           set +e
           RESULT=$(diff <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end) | del(.tests[].pair.diff)' test/__fixtures__/integration-test/**/integration-test.json) <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end) | del(.tests[].pair.diff)' integrationTestDir/backstop_data/bitmaps_test/**/report.json))
           if [[ $RESULT == "" ]]; then
-            echo "# ✅ Integration Test Results Validated" >> $GITHUB_STEP_SUMMARY
+            echo "# ✅ Integration Shapes Match" >> $GITHUB_STEP_SUMMARY
           else
             echo "# ❎ Integration Test Results Invalid — Differences:" >> $GITHUB_STEP_SUMMARY
             echo '```diff' >> $GITHUB_STEP_SUMMARY
             echo "${RESULT}" >> $GITHUB_STEP_SUMMARY
             echo '```'
           fi
+
+      - name: "Validate Integration Test Results"
+        id: diff
+        continue-on-error: true
+        run: |
+          set +e
+          FULL_DIFF=$(diff <(jq -S '.tests[]' test/__fixtures__/integration-test/**/integration-test.json) <(jq -S '.tests[]' integrationTestDir/backstop_data/bitmaps_test/**/report.json))
+          echo $FULL_DIFF >> $GITHUB_STEP_SUMMARY
 
       - name: "Test Results Validation Outcome"
         run: |
