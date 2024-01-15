@@ -54,7 +54,7 @@ jobs:
             echo '```' >> $GITHUB_STEP_SUMMARY
           fi
 
-      - name: "Display Full Integration Test Diffs"
+      - name: "Full Integration Test Diff"
         id: diff
         continue-on-error: true
         run: |
