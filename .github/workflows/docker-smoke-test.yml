@@ -64,6 +64,7 @@ jobs:
       - name: "𓋏 Run `backstop test --confg=backstop_features` in Docker"
         continue-on-error: true
         run: |
+          set +e
           cd test/configs/ && docker run --rm -t --mount type=bind,source="$(pwd)",target=/src $REGISTRY/$IMAGE_NAME_LC:$TAG test --config=backstop_features
 
       - name: "Validate Puppeteer Report"
@@ -152,6 +153,7 @@ jobs:
       - name: "🎭 Run `backstop test --confg=backstop_features_pw` in Docker"
         continue-on-error: true
         run: |
+          set +e
           cd test/configs/ && docker run --rm -t --mount type=bind,source="$(pwd)",target=/src $REGISTRY/$IMAGE_NAME_LC:$TAG test --config=backstop_features_pw
 
       - name: "Validate Playwright Report"
