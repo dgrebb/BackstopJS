@@ -68,8 +68,8 @@ jobs:
 
       - name: "Validate Puppeteer Report"
         run: |
-          PUPPETEER_TEST_RESULT=$(diff -c <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end) | del(.tests[].pair.diff)' test/__fixtures__/smoke-test-docker.json) \
-            <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end) | del(.tests[].pair.diff)' test/configs/backstop_data/bitmaps_test/**/report.json))
+          PUPPETEER_TEST_RESULT=$(diff -c <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end)' test/__fixtures__/smoke-test-docker.json) \
+            <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end)' test/configs/backstop_data/bitmaps_test/**/report.json))
           echo "PUPPETEER_TEST_RESULT=$PUPPETEER_TEST_RESULT" >> $GITHUB_ENV
           if [[ "$PUPPETEER_TEST_RESULT" != "" ]]; then
             echo "# ❎ Puppeteer Smoke Different" >> $GITHUB_STEP_SUMMARY
@@ -154,8 +154,8 @@ jobs:
 
       - name: "Validate Playwright Report"
         run: |
-          PLAYWRIGHT_TEST_RESULT=$(diff -c <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end) | del(.tests[].pair.diff)' test/__fixtures__/smoke-test-playwright-docker.json) \
-            <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end) | del(.tests[].pair.diff)' test/configs/backstop_data/bitmaps_test/**/report.json))
+          PLAYWRIGHT_TEST_RESULT=$(diff -c <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end)' test/__fixtures__/smoke-test-playwright-docker.json) \
+            <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end)' test/configs/backstop_data/bitmaps_test/**/report.json))
           echo "PLAYWRIGHT_TEST_RESULT=$PLAYWRIGHT_TEST_RESULT" >> $GITHUB_ENV
           if [[ "$PLAYWRIGHT_TEST_RESULT" != "" ]]; then
             echo "# ❎ Playwright Sanity Report Different" >> $GITHUB_STEP_SUMMARY
