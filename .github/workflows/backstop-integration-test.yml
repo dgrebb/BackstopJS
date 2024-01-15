@@ -42,46 +42,27 @@ jobs:
         run: |
           set +e
 
-          echo "REFERENCE_REPORT=$(ls -ltrd integrationTestDir/backstop_data/bitmaps_test/*/ | grep '^d' | head -n 1 | awk '{print $NF}')" >> $GITHUB_ENV
-          echo "TEST_REPORT=$(ls -ltd integrationTestDir/backstop_data/bitmaps_test/*/ | grep '^d' | head -n 1 | awk '{print $NF}')" >> $GITHUB_ENV
+          echo "TEST_REPORT_DIR=$(ls -ltd integrationTestDir/backstop_data/bitmaps_test/*/ | grep '^d' | head -n 1 | awk '{print $NF}')" >> $GITHUB_ENV
 
-          REF_RESULT=$(diff <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end) | del(.tests[].pair.diff)' test/__fixtures__/integration-test/reference-report.json) <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end) | del(.tests[].pair.diff)' ${REFERENCE_REPORT}report.json))
+          echo "TEST_RESULT=$(diff <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end) | del(.tests[].pair.diff)' test/__fixtures__/integration-test/test-report.json) <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end) | del(.tests[].pair.diff)' ${TEST_REPORT_DIR}report.json))" >> $GITHUB_ENV
 
-          if [[ $REF_RESULT == "" ]] && [[ $TEST_RESULT == "" ]]; then
-            echo "# ✅ Integration Shapes Match" >> $GITHUB_STEP_SUMMARY
+          if [[ $TEST_RESULT == "" ]]; then
+            echo "# ✅ Integration Test Report Shapes Match" >> $GITHUB_STEP_SUMMARY
           else
-            echo "# ❎ Integration Shapes Differ:" >> $GITHUB_STEP_SUMMARY
-            if [[ $REF_RESULT != "" ]]; then
-              echo "## Bitmaps Reference Report" >> $GITHUB_STEP_SUMMARY
-              echo '```diff' >> $GITHUB_STEP_SUMMARY
-              echo "${REF_RESULT}" >> $GITHUB_STEP_SUMMARY
-              echo '```' >> $GITHUB_STEP_SUMMARY
-            elif [[ $TEST_RESULT != "" ]]; then
-              echo "## Bitmaps Test Test Report" >> $GITHUB_STEP_SUMMARY
-              echo '```diff' >> $GITHUB_STEP_SUMMARY
-              echo "${TEST_RESULT}" >> $GITHUB_STEP_SUMMARY
-              echo '```' >> $GITHUB_STEP_SUMMARY
-            fi
+            echo "# ❎ Integration Test Report Shapes Differ:" >> $GITHUB_STEP_SUMMARY
+            echo "## Bitmaps Test Test Report" >> $GITHUB_STEP_SUMMARY
+            echo '```diff' >> $GITHUB_STEP_SUMMARY
+            echo "${TEST_RESULT}" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
           fi
 
-      - name: "Validate Integration Test Results"
+      - name: "Display Full Integration Test Diffs"
         id: diff
         continue-on-error: true
         run: |
           set +e
-          FULL_REF_DIFF=$(diff <(jq -S '.tests[]' test/__fixtures__/integration-test/reference-report.json) <(jq -S '.tests[]' ${REFERENCE_REPORT}report.json))
-          FULL_TEST_DIFF=$(diff <(jq -S '.tests[]' test/__fixtures__/integration-test/test-report.json) <(jq -S '.tests[]' ${TEST_REPORT}report.json))
-          echo "# Unfiltered Diffs" >> $GITHUB_STEP_SUMMARY
-
-          echo "## Reference Report Diff" >> $GITHUB_STEP_SUMMARY
-          echo "<details>" >> $GITHUB_STEP_SUMMARY
-          echo "<summary>Show</summary>" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo '```diff' >> $GITHUB_STEP_SUMMARY
-          echo "${FULL_REF_DIFF}" >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "</details>" >> $GITHUB_STEP_SUMMARY
+          FULL_TEST_DIFF=$(diff <(jq -S '.tests[]' test/__fixtures__/integration-test/test-report.json) <(jq -S '.tests[]' ${TEST_REPORT_DIR}report.json))
+          echo "# Unfiltered Diff" >> $GITHUB_STEP_SUMMARY
 
           echo "## Test Report Diff" >> $GITHUB_STEP_SUMMARY
           echo "<details>" >> $GITHUB_STEP_SUMMARY
