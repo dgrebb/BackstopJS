@@ -52,6 +52,24 @@ jobs:
             && exit 1
           fi
 
+      - name: "Full Sanity Test Diff"
+        id: diff
+        continue-on-error: true
+        run: |
+          set +e
+          FULL_TEST_DIFF=$(diff <(jq -S '.tests[]' test/__fixtures__/sanity-test.json) <(jq -S '.tests[]' test/configs/backstop_data/bitmaps_test/**/report.json))
+          if [[ $FULL_TEST_DIFF != "" ]]; then
+            echo "## Unfiltered Diff" >> $GITHUB_STEP_SUMMARY
+            echo "<details>" >> $GITHUB_STEP_SUMMARY
+            echo "<summary>Expand Diff</summary>" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo '```diff' >> $GITHUB_STEP_SUMMARY
+            echo "${FULL_TEST_DIFF}" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "</details>" >> $GITHUB_STEP_SUMMARY
+          fi
+
   sanity-playwright:
     name: 🤪 Playwright
     runs-on: ubuntu-latest
@@ -90,4 +108,22 @@ jobs:
             echo "# ❎ Playwright Sanity Validation Diff" >> $GITHUB_STEP_SUMMARY
             echo "```diff\n${RESULT}\n```" >> $GITHUB_STEP_SUMMARY \
             && exit 1
+          fi
+
+      - name: "Full Sanity Test Diff"
+        id: diff
+        continue-on-error: true
+        run: |
+          set +e
+          FULL_TEST_DIFF=$(diff <(jq -S '.tests[]' test/__fixtures__/sanity-test-playwright.json) <(jq -S '.tests[]' test/configs/backstop_data/bitmaps_test/**/report.json))
+          if [[ $FULL_TEST_DIFF != "" ]]; then
+            echo "## Unfiltered Diff" >> $GITHUB_STEP_SUMMARY
+            echo "<details>" >> $GITHUB_STEP_SUMMARY
+            echo "<summary>Expand Diff</summary>" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo '```diff' >> $GITHUB_STEP_SUMMARY
+            echo "${FULL_TEST_DIFF}" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "</details>" >> $GITHUB_STEP_SUMMARY
           fi
