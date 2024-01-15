@@ -35,7 +35,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha || github.ref }}
 
       - name: "Setup Node, npm Cache, and Install"
-        uses: ./.github/actions/node-cache-install
+        uses: ./.github/actions/setup-base
 
       - name: Set Name and Tag Vars
         env:
@@ -119,7 +119,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha || github.ref }}
 
       - name: "Setup Node, npm Cache, and Install"
-        uses: ./.github/actions/node-cache-install
+        uses: ./.github/actions/setup-base
 
       - name: Set Name and Tag Vars
         env:
