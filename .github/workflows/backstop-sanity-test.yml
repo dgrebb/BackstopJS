@@ -42,18 +42,15 @@ jobs:
         continue-on-error: true
         run: |
           set +e
-          diff -c <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end)' test/__fixtures__/sanity-test.json) \
-            <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end)' test/configs/backstop_data/bitmaps_test/**/report.json)
-          RESULT=$?
-          if [[ $RESULT == "0" ]]; then
+          PUPPETEER_TEST_RESULT=$(diff -c <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end)' test/__fixtures__/sanity-test.json) \
+            <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end)' test/configs/backstop_data/bitmaps_test/**/report.json))
+          echo "PUPPETEER_TEST_RESULT=$PUPPETEER_TEST_RESULT" >> $GITHUB_ENV
+          if [[ $PUPPETEER_TEST_RESULT == "0" ]]; then
             echo "# ✅ Puppeteer Sanity Test Valid" >> $GITHUB_STEP_SUMMARY
-            echo '```diff' >> $GITHUB_STEP_SUMMARY
-            echo "${RESULT}" >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
           else
             echo "# ❎ Puppeteer Sanity Different" >> $GITHUB_STEP_SUMMARY
             echo '```diff' >> $GITHUB_STEP_SUMMARY
-            echo "${RESULT}" >> $GITHUB_STEP_SUMMARY
+            echo "${PUPPETEER_TEST_RESULT}" >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
           fi
 
@@ -77,7 +74,7 @@ jobs:
 
       - name: "Report Validation Outcome"
         run: |
-          if [[ $RESULT == "0" ]]; then
+          if [[ $PUPPETEER_TEST_RESULT == "0" ]]; then
             exit 0
           else
             exit 1
@@ -113,18 +110,15 @@ jobs:
         continue-on-error: true
         run: |
           set +e
-          diff -c <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end)' test/__fixtures__/sanity-test-playwright.json) \
-            <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end)' test/configs/backstop_data/bitmaps_test/**/report.json)
-          RESULT=$?
-          if [[ $RESULT == "0" ]]; then
+          PLAYWRIGHT_TEST_RESULT=$(diff -c <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end)' test/__fixtures__/sanity-test-playwright.json) \
+            <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end)' test/configs/backstop_data/bitmaps_test/**/report.json))
+          echo "PLAYWRIGHT_TEST_RESULT=$PLAYWRIGHT_TEST_RESULT" >> $GITHUB_ENV
+          if [[ $PLAYWRIGHT_TEST_RESULT == "0" ]]; then
             echo "# ✅ Playwright Sanity Report Valid" >> $GITHUB_STEP_SUMMARY
-            echo '```diff' >> $GITHUB_STEP_SUMMARY
-            echo "```${RESULT}" >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
           else
             echo "# ❎ Playwright Sanity Report Different" >> $GITHUB_STEP_SUMMARY
             echo '```diff' >> $GITHUB_STEP_SUMMARY
-            echo "```${RESULT}" >> $GITHUB_STEP_SUMMARY
+            echo "```${PLAYWRIGHT_TEST_RESULT}" >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
           fi
 
@@ -148,7 +142,7 @@ jobs:
 
       - name: "Report Validation Outcome"
         run: |
-          if [[ $RESULT == "0" ]]; then
+          if [[ $PLAYWRIGHT_TEST_RESULT == "0" ]]; then
             exit 0
           else
             exit 1
