@@ -24,7 +24,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha || github.ref }}
 
       - name: "Setup Node, npm Cache, and Install"
-        uses: ./.github/actions/node-cache-install.yml
+        uses: ./.github/actions/node-cache-install
 
       - name: "𓋏 Run `npm run integration-test`"
         run: |

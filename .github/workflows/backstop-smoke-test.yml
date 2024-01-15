@@ -24,7 +24,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha || github.ref }}
 
       - name: "Setup Node, npm Cache, and Install"
-        uses: ./.github/actions/node-cache-install.yml
+        uses: ./.github/actions/node-cache-install
 
       - name: "𓋏 Run `npm run smoke-test`"
         continue-on-error: true
@@ -82,7 +82,7 @@ jobs:
           fetch-depth: 1
           ref: ${{ github.event.pull_request.head.sha || github.ref }}
             - name: "Setup Node, npm Cache, and Install"
-        uses: ./.github/actions/node-cache-install.yml
+        uses: ./.github/actions/node-cache-install
 
       - name: "🎭 Run `npm run smoke-test-playwright`"
         continue-on-error: true
