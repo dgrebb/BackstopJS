@@ -6,17 +6,17 @@ const { shouldRunDocker, runDocker } = require('../util/runDocker');
 module.exports = {
   execute: function (config) {
     const executeCommand = require('./index');
-    if (shouldRunDocker(config)) {
-      return runDocker(config, 'test')
-        .finally(() => {
-          if (config.openReport && config.report && config.report.indexOf('browser') > -1) {
-            executeCommand('_openReport', config);
-          }
-        });
-    } else {
-      return createBitmaps(config, false).then(function () {
-        return executeCommand('_report', config);
-      });
-    }
+    // if (shouldRunDocker(config)) {
+    //   return runDocker(config, 'test')
+    //     .finally(() => {
+    //       if (config.openReport && config.report && config.report.indexOf('browser') > -1) {
+    //         executeCommand('_openReport', config);
+    //       }
+    //     });
+    // } else {
+    //   return createBitmaps(config, false).then(function () {
+    //     // return executeCommand('_report', config);
+    //   });
+    // }
   }
 };
