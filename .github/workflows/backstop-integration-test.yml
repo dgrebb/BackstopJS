@@ -48,7 +48,7 @@ jobs:
             echo "# ✅ Integration Test Report Shapes Match" >> $GITHUB_STEP_SUMMARY
           else
             echo "# ❎ Integration Test Report Shapes Differ:" >> $GITHUB_STEP_SUMMARY
-            echo "## Bitmaps Test Test Report" >> $GITHUB_STEP_SUMMARY
+            echo "## Failing Diff" >> $GITHUB_STEP_SUMMARY
             echo '```diff' >> $GITHUB_STEP_SUMMARY
             echo "${TEST_RESULT}" >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
@@ -61,10 +61,9 @@ jobs:
           set +e
           FULL_TEST_DIFF=$(diff <(jq -S '.tests[]' test/__fixtures__/integration-test.json) <(jq -S '.tests[]' ${TEST_REPORT_DIR}report.json))
           if [[ $FULL_TEST_DIFF != "" ]]; then
-            echo "# Unfiltered Diff" >> $GITHUB_STEP_SUMMARY
-            echo "There were acceptable differences during testing, which can be reviewed below." >> $GITHUB_STEP_SUMMARY
+            echo "## Unfiltered Diff" >> $GITHUB_STEP_SUMMARY
             echo "<details>" >> $GITHUB_STEP_SUMMARY
-            echo "<summary>Show</summary>" >> $GITHUB_STEP_SUMMARY
+            echo "<summary>Expand Diff</summary>" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo '```diff' >> $GITHUB_STEP_SUMMARY
             echo "${FULL_TEST_DIFF}" >> $GITHUB_STEP_SUMMARY
