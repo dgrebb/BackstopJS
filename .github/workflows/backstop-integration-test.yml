@@ -14,7 +14,7 @@ env:
 
 jobs:
   integration:
-    name: 🧩 Integration
+    name: 🧩 Validate Integration Test Results
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -41,11 +41,8 @@ jobs:
         continue-on-error: true
         run: |
           set +e
-
           echo "TEST_REPORT_DIR=$(ls -ltd integrationTestDir/backstop_data/bitmaps_test/*/ | grep '^d' | head -n 1 | awk '{print $NF}')" >> $GITHUB_ENV
-
           echo "TEST_RESULT=$(diff <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end) | del(.tests[].pair.diff)' test/__fixtures__/integration-test/test-report.json) <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end) | del(.tests[].pair.diff)' ${TEST_REPORT_DIR}report.json))" >> $GITHUB_ENV
-
           if [[ $TEST_RESULT == "" ]]; then
             echo "# ✅ Integration Test Report Shapes Match" >> $GITHUB_STEP_SUMMARY
           else
