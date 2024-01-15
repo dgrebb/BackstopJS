@@ -62,7 +62,7 @@ jobs:
           FULL_TEST_DIFF=$(diff <(jq -S '.tests[]' test/__fixtures__/integration-test.json) <(jq -S '.tests[]' ${TEST_REPORT_DIR}report.json))
           if [[ $FULL_TEST_DIFF != "" ]]; then
             echo "# Unfiltered Diff" >> $GITHUB_STEP_SUMMARY
-            echo "There were acceptable differences during testing, which can be reviewed below."
+            echo "There were acceptable differences during testing, which can be reviewed below." >> $GITHUB_STEP_SUMMARY
             echo "<details>" >> $GITHUB_STEP_SUMMARY
             echo "<summary>Show</summary>" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
