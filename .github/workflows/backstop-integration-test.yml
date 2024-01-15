@@ -1,4 +1,4 @@
-name: Backstop Integration Tests
+name: Backstop Integration Test Check
 
 on:
   workflow_dispatch:
@@ -46,7 +46,7 @@ jobs:
             echo "# ✅ Integration Shapes Match" >> $GITHUB_STEP_SUMMARY
           else
             echo "# ❎ Integration Shapes Differ:" >> $GITHUB_STEP_SUMMARY
-            echo '```diff' >> $GITHUB_STEP_SUMMARY
+            echo '<div class="highlight highlight-source-diff notranslate position-relative overflow-auto"><pre class="notranslate"></div>' >> $GITHUB_STEP_SUMMARY
             echo "${RESULT}" >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
           fi
@@ -58,10 +58,13 @@ jobs:
           set +e
           FULL_DIFF=$(diff <(jq -S '.tests[]' test/__fixtures__/integration-test/**/integration-test.json) <(jq -S '.tests[]' integrationTestDir/backstop_data/bitmaps_test/**/report.json))
           echo "## Unfiltered Diff" >> $GITHUB_STEP_SUMMARY
-          echo "<details><summary>Show</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "<details>" >> $GITHUB_STEP_SUMMARY
+          echo "<summary>Show</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo '```diff' >> $GITHUB_STEP_SUMMARY
           echo "${FULL_DIFF}" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: "Test Results Validation Outcome"
