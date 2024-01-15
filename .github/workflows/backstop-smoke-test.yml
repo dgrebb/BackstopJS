@@ -1,4 +1,4 @@
-name: Backstop Smoke Tests
+name: Smoke Test Checks
 
 on:
   workflow_dispatch:

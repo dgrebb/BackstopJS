@@ -15,7 +15,7 @@ module.exports = {
         });
     } else {
       return createBitmaps(config, false).then(function () {
-        // return executeCommand('_report', config);
+        return executeCommand('_report', config);
       });
     }
   }
