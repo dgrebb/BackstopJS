@@ -1,4 +1,4 @@
-name: Backstop Integration Test Check
+name: Integration Test Check
 
 on:
   workflow_dispatch:

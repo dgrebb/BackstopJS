@@ -1,4 +1,4 @@
-name: Backstop Sanity Test Checks
+name: Sanity Test Checks
 
 on:
   workflow_dispatch:
