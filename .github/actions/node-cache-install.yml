@@ -4,6 +4,11 @@ description: "Checks out the BackstopJS repo at the calling or current branch wi
 runs:
   using: "composite"
   steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+        ref: ${{ github.event.pull_request.head.sha || github.ref }}
     - name: ⬢ Setup Node & Cache
       uses: actions/setup-node@v4
       with:

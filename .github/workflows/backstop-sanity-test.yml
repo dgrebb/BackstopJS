@@ -17,11 +17,7 @@ jobs:
     name: 🤪 Puppeteer
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-          ref: ${{ github.event.pull_request.head.sha || github.ref }}
+      - uses: actions/checkout@v4
 
       - name: "Setup Node, npm Cache, and Install"
         uses: ./.github/actions/node-cache-install.yml
