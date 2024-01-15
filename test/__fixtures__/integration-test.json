@@ -30,7 +30,7 @@
         "reference": "../bitmaps_reference/backstop_default_BackstopJS_Homepage_0_document_1_tablet.png",
         "test": "../bitmaps_test/20240114-203323/backstop_default_BackstopJS_Homepage_0_document_1_tablet.png",
         "selector": "document",
-        "filedddName": "backstop_default_BackstopJS_Homepage_0_document_1_tablet.png",
+        "fileName": "backstop_default_BackstopJS_Homepage_0_document_1_tablet.png",
         "label": "BackstopJS Homepage",
         "requireSameDimensions": true,
         "misMatchThreshold": 0.1,
