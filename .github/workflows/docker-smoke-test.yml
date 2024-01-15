@@ -27,7 +27,14 @@ jobs:
       packages: write
 
     steps:
-      - uses: ./.github/actions/checkout-cache-install.yml
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.sha || github.ref }}
+
+      - name: "Setup Node, npm Cache, and Install"
+        uses: ./.github/actions/node-cache-install.yml
 
       - name: Set Name and Tag Vars
         env:
@@ -103,7 +110,14 @@ jobs:
       packages: write
 
     steps:
-      - uses: ./.github/actions/checkout-cache-install.yml
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.sha || github.ref }}
+
+      - name: "Setup Node, npm Cache, and Install"
+        uses: ./.github/actions/node-cache-install.yml
 
       - name: Set Name and Tag Vars
         env:

@@ -17,7 +17,14 @@ jobs:
     name: 🤪 Puppeteer
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/checkout-cache-install.yml
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.sha || github.ref }}
+
+      - name: "Setup Node, npm Cache, and Install"
+        uses: ./.github/actions/node-cache-install.yml
 
       - name: "𓋏 Run `npm run sanity-test`"
         continue-on-error: true
@@ -69,7 +76,14 @@ jobs:
     name: 🤪 Playwright
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/checkout-cache-install.yml
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.sha || github.ref }}
+
+      - name: "Setup Node, npm Cache, and Install"
+        uses: ./.github/actions/node-cache-install.yml
 
       - name: "🎭 Run `npm run sanity-test-playwright`"
         continue-on-error: true
