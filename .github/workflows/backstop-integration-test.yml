@@ -45,14 +45,14 @@ jobs:
           echo "TEST_REPORT_DIR=$TEST_REPORT_DIR" >> $GITHUB_ENV
           TEST_RESULT=$(diff <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end)' test/__fixtures__/integration-test.json) <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end)' ${TEST_REPORT_DIR}report.json))
           echo "TEST_RESULT=$TEST_RESULT" >> $GITHUB_ENV
-          if [[ $TEST_RESULT == "" ]]; then
-            echo "# ✅ Integration Test Report Shapes Match" >> $GITHUB_STEP_SUMMARY
-          else
+          if [[ "$TEST_RESULT" != "" ]]; then
             echo "# ❎ Integration Test Report Shapes Differ:" >> $GITHUB_STEP_SUMMARY
             echo "## Failing Diff" >> $GITHUB_STEP_SUMMARY
             echo '```diff' >> $GITHUB_STEP_SUMMARY
             echo "${TEST_RESULT}" >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
+          else
+            echo "# ✅ Integration Test Report Shapes Match" >> $GITHUB_STEP_SUMMARY
           fi
 
       - name: "Full Integration Test Diff"
@@ -61,22 +61,20 @@ jobs:
         run: |
           set +e
           FULL_TEST_DIFF=$(diff <(jq -S '.tests[]' test/__fixtures__/integration-test.json) <(jq -S '.tests[]' ${TEST_REPORT_DIR}report.json))
-          if [[ $FULL_TEST_DIFF != "" ]]; then
-            echo "## Unfiltered Diff" >> $GITHUB_STEP_SUMMARY
-            echo "<details>" >> $GITHUB_STEP_SUMMARY
-            echo "<summary>Expand Diff</summary>" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo '```diff' >> $GITHUB_STEP_SUMMARY
-            echo "${FULL_TEST_DIFF}" >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "</details>" >> $GITHUB_STEP_SUMMARY
-          fi
+          echo "## Unfiltered Diff" >> $GITHUB_STEP_SUMMARY
+          echo "<details>" >> $GITHUB_STEP_SUMMARY
+          echo "<summary>Expand Diff</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo '```diff' >> $GITHUB_STEP_SUMMARY
+          echo "${FULL_TEST_DIFF}" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: "Test Results Validation Outcome"
         run: |
-          if [[ $TEST_RESULT == "" ]]; then
-            exit 0
-          else
+          if [[ "$TEST_RESULT" != "" ]]; then
             exit 1
+          else
+            exit 0
           fi
