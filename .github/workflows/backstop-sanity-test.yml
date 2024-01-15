@@ -119,13 +119,11 @@ jobs:
             echo '```diff' >> $GITHUB_STEP_SUMMARY
             echo "```${RESULT}" >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
-            && exit 0
           else
             echo "# ❎ Playwright Sanity Report Different" >> $GITHUB_STEP_SUMMARY
             echo '```diff' >> $GITHUB_STEP_SUMMARY
             echo "```${RESULT}" >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
-            && exit 1
           fi
 
       - name: "Full Sanity Test Diff"
