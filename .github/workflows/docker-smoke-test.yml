@@ -67,6 +67,7 @@ jobs:
           cd test/configs/ && docker run --rm -t --mount type=bind,source="$(pwd)",target=/src $REGISTRY/$IMAGE_NAME_LC:$TAG test --config=backstop_features
 
       - name: "Validate Puppeteer Report"
+        continue-on-error: true
         run: |
           set +e
           PUPPETEER_TEST_RESULT=$(diff -c <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end)' test/__fixtures__/smoke-test-docker.json) \
@@ -154,6 +155,7 @@ jobs:
           cd test/configs/ && docker run --rm -t --mount type=bind,source="$(pwd)",target=/src $REGISTRY/$IMAGE_NAME_LC:$TAG test --config=backstop_features_pw
 
       - name: "Validate Playwright Report"
+        continue-on-error: true
         run: |
           set +e
           PLAYWRIGHT_TEST_RESULT=$(diff -c <(jq 'walk(if type == "object" then with_entries(.value |= if type == "object" or type == "array" then . else "" end) else . end)' test/__fixtures__/smoke-test-playwright-docker.json) \
