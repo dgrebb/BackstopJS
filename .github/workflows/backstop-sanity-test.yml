@@ -51,7 +51,7 @@ jobs:
           git clone -b ${{ github.event.pull_request.head.sha || github.head_ref || github.ref_name || github.ref }} https://github.com/${{ github.repository }}.git ${{ steps.base.outputs.WORKSPACE_ROOT }}
           ls ${{ steps.base.outputs.WORKSPACE_ROOT }}
 
-      - uses: ./actions/.github/actions/setup-node
+      - uses: ./.github/actions/setup-node
         id: node
 
       - name: "𓋏 Run `npm run sanity-test`"
@@ -134,7 +134,7 @@ jobs:
           git clone -b ${{ github.event.pull_request.head.sha || github.head_ref || github.ref_name || github.ref }} https://github.com/${{ github.repository }}.git ${{ steps.base.outputs.WORKSPACE_ROOT }}
           ls ${{ steps.base.outputs.WORKSPACE_ROOT }}
 
-      - uses: ./actions/.github/actions/setup-node
+      - uses: ./.github/actions/setup-node
         id: node
 
       - name: "🎭 Run `npm run sanity-test-playwright`"
