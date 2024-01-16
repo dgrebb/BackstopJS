@@ -5,6 +5,8 @@ runs:
   using: "composite"
   steps:
     - name: Set Name and Tag Vars
+      shell: bash
+      working-directory: ${{ steps.base.outputs.WORKSPACE_ROOT }}
       env:
         name: "${{ env.BRANCH_NAME }}"
       run: |
@@ -21,5 +23,7 @@ runs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Pull Image
+      shell: bash
+      working-directory: ${{ steps.base.outputs.WORKSPACE_ROOT }}
       run: |
         docker pull $REGISTRY/$IMAGE_NAME_LC:$TAG
