@@ -20,7 +20,7 @@ runs:
   using: "composite"
   steps:
     - name: Setup tmate session
-      if: ${{ inputs.DEBUG_ENABLED && inputs.DEBUG_OS == inputs.MATRIX_OS && inputs.DEBUG_ARCH == inputs.MATRIX_ARCH }}
+      if: ${{ inputs.DEBUG_ENABLED }}
       uses: mxschmitt/action-tmate@v3
       with:
         limit-access-to-actor: true
@@ -36,7 +36,7 @@ runs:
     - name: ⬢ Setup Node & Cache
       uses: actions/setup-node@v4
       with:
-        node-version: $NODE_VERSION
+        node-version: ${{ env.NODE_VERSION }}
         cache: "npm"
         cache-dependency-path: package-lock.json
 
