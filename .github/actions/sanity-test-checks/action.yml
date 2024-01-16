@@ -64,7 +64,7 @@ runs:
       working-directory: ${{ inputs.WORKSPACE_ROOT }}
       run: |
         set +e
-        FULL_TEST_DIFF=$(diff <(jq -S '.tests[]' test/__fixtures__/${{ inputs.FIXTURE }}.json) <(jq -S '.tests[]' test/configs/backstop_data/bitmaps_test/**/report.json))
+        FULL_TEST_DIFF=$(diff <(jq -S '.tests[]' $FIXTURE) <(jq -S '.tests[]' test/configs/backstop_data/bitmaps_test/**/report.json))
         echo "## Unfiltered Diff" >> $GITHUB_STEP_SUMMARY
         echo "<details>" >> $GITHUB_STEP_SUMMARY
         echo "<summary>Expand Diff</summary>" >> $GITHUB_STEP_SUMMARY
@@ -77,7 +77,7 @@ runs:
 
     - name: "Report Validation Outcome"
       shell: bash
-      working-directory: ${{ steps.base.outputs.WORKSPACE_ROOT }}
+      working-directory: ${{ inputs.WORKSPACE_ROOT }}
       run: |
         if [[ "$TEST_RESULT" != "" ]]; then
           exit 1
