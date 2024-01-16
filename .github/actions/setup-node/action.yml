@@ -6,6 +6,7 @@ runs:
   steps:
     - name: ⬢ Setup Node & Cache
       uses: actions/setup-node@v4
+      working-directory: ${{ steps.base.outputs.WORKSPACE_ROOT }}
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: "npm"
@@ -13,4 +14,5 @@ runs:
 
     - name: ↧ Install
       shell: bash
+      working-directory: ${{ steps.base.outputs.WORKSPACE_ROOT }}
       run: npm ci
