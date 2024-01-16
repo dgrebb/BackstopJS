@@ -36,7 +36,7 @@ jobs:
             .github/actions
           path: actions
 
-      - uses: ./actions/setup-base
+      - uses: ./actions/.github/actions/setup-base
         id: base
         with:
           DEBUG_ENABLED: ${{ inputs.DEBUG_ENABLED }}
@@ -116,7 +116,7 @@ jobs:
             .github/actions
           path: actions
 
-      - uses: ./actions/setup-base
+      - uses: ./actions/.github/actions/setup-base
         id: base
 
       - name: "🎭 Run `npm run sanity-test-playwright`"
