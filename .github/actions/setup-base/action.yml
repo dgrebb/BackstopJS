@@ -32,14 +32,3 @@ runs:
       run: |
         WORKSPACE_ROOT=$GITHUB_WORKSPACE
         echo "WORKSPACE_ROOT=$WORKSPACE_ROOT" | tee -a $GITHUB_OUTPUT
-
-    - name: ⬢ Setup Node & Cache
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-        cache: "npm"
-        cache-dependency-path: package-lock.json
-
-    - name: ↧ Install
-      shell: bash
-      run: npm ci

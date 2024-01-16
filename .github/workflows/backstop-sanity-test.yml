@@ -51,6 +51,9 @@ jobs:
           git clone -b ${{ github.head_ref || github.ref_name }} https://github.com/${{ github.repository }}.git ${{ steps.base.outputs.WORKSPACE_ROOT }}
           ls ${{ steps.base.outputs.WORKSPACE_ROOT }}
 
+      - uses: ./actions/.github/actions/setup-node
+        id: node
+
       - name: "𓋏 Run `npm run sanity-test`"
         continue-on-error: true
         shell: bash

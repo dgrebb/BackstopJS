@@ -1,0 +1,16 @@
+name: "Setup Node and Dependencies"
+description: "Sets up Node, npm caching, and installs dependencies"
+
+runs:
+  using: "composite"
+  steps:
+    - name: ⬢ Setup Node & Cache
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: "npm"
+        cache-dependency-path: package-lock.json
+
+    - name: ↧ Install
+      shell: bash
+      run: npm ci
