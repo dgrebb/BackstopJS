@@ -31,6 +31,8 @@ jobs:
 
       - uses: ./actions/.github/actions/setup-node
         id: node
+        with:
+          WORKSPACE_ROOT: ${{ steps.base.outputs.WORKSPACE_ROOT }}
 
       - name: "𓋏 Run `npm run sanity-test`"
         continue-on-error: true
@@ -103,6 +105,8 @@ jobs:
 
       - uses: ./actions/.github/actions/setup-node
         id: node
+        with:
+          WORKSPACE_ROOT: ${{ steps.base.outputs.WORKSPACE_ROOT }}
 
       - name: "🎭 Run `npm run sanity-test-playwright`"
         continue-on-error: true

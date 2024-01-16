@@ -1,6 +1,10 @@
 name: "Setup Node and Dependencies"
 description: "Sets up Node, npm caching, and installs dependencies"
 
+inputs:
+  WORKSPACE_ROOT:
+    required: true
+
 runs:
   using: "composite"
   steps:
