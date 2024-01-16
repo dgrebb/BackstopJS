@@ -109,6 +109,8 @@ jobs:
           WORKSPACE_ROOT: ${{ steps.base.outputs.WORKSPACE_ROOT }}
 
       - uses: ./actions/.github/actions/cache-playwright
+        with:
+          WORKSPACE_ROOT: ${{ steps.base.outputs.WORKSPACE_ROOT }}
 
       - name: "🎭 Run `npm run sanity-test-playwright`"
         continue-on-error: true

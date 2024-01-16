@@ -1,12 +1,17 @@
 name: "Install and Cache Playwright"
 description: "Sets up a cache and/or installs Playwright and its binaries."
 
+inputs:
+  WORKSPACE_ROOT:
+    description: "The workspace root."
+    required: true
+
 runs:
   using: "composite"
   steps:
     - name: Get installed Playwright version
       shell: bash
-      working-directory: ${{ steps.base.outputs.WORKSPACE_ROOT }}
+      working-directory: ${{ inputs.WORKSPACE_ROOT }}
       id: playwright-version
       run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').dependencies['@playwright/test'].version)")" >> $GITHUB_ENV
 
@@ -19,15 +24,15 @@ runs:
         key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
 
     - shell: bash
-      working-directory: ${{ steps.base.outputs.WORKSPACE_ROOT }}
+      working-directory: ${{ inputs.WORKSPACE_ROOT }}
       run: npm ci
 
     - shell: bash
       if: steps.playwright-cache.outputs.cache-hit != 'true'
-      working-directory: ${{ steps.base.outputs.WORKSPACE_ROOT }}
+      working-directory: ${{ inputs.WORKSPACE_ROOT }}
       run: npx playwright install --with-deps
 
     - shell: bash
       if: steps.playwright-cache.outputs.cache-hit != 'true'
-      working-directory: ${{ steps.base.outputs.WORKSPACE_ROOT }}
+      working-directory: ${{ inputs.WORKSPACE_ROOT }}
       run: npx playwright install-deps
