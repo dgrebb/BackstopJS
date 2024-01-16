@@ -41,5 +41,5 @@ runs:
     - name: Checkout to workspace
       shell: bash
       run: |
-        git clone -b ${{ github.event.pull_request.head.sha || github.head_ref || github.ref_name || github.ref }} https://github.com/${{ github.repository }}.git ${{ steps.base.outputs.WORKSPACE_ROOT }}
-        ls ${{ steps.base.outputs.WORKSPACE_ROOT }}
+        git clone -b ${{ github.event.pull_request.head.sha || github.head_ref || github.ref_name || github.ref }} https://github.com/${{ github.repository }}.git ${{ steps.workspace_root.outputs.WORKSPACE_ROOT }}
+        ls ${{ steps.workspace_root.outputs.WORKSPACE_ROOT }}
