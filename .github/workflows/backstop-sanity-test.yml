@@ -2,6 +2,17 @@ name: Sanity Test Checks
 
 on:
   workflow_dispatch:
+    DEBUG_ENABLED:
+      description: "Run the build with tmate debugging enabled (https://github.com/marketplace/actions/debugging-with-tmate)"
+      type: boolean
+      required: false
+      default: false
+    DEBUG_DETACHED:
+      description: "whether to launch tmate in detached mode (if the tmate action is run)"
+      type: boolean
+      required: false
+      default: true
+
   workflow_call:
 
 permissions:
@@ -20,13 +31,24 @@ jobs:
       - name: Checkout actions
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha || github.ref }}
+          ref: ${{ github.event.pull_request.head.sha || github.head_ref || github.ref_name || github.ref }}
           sparse-checkout: |
             .github/actions
           path: actions
 
       - uses: ./.github/actions/setup-base
         id: base
+        with:
+          DEBUG_ENABLED: ${{ inputs.DEBUG_ENABLED }}
+          DEBUG_DETACHED: ${{ inputs.DEBUG_DETACHED }}
+
+      - name: Checkout to workspace
+        shell: bash
+        run: |
+          rm -rf ${{ steps.setup_base.outputs.WORKSPACE_ROOT }}/*
+          rm -rf ${{ steps.setup_base.outputs.WORKSPACE_ROOT }}/*.*
+          git clone -b ${{ github.head_ref || github.ref_name }} https://github.com/${{ github.repository }}.git ${{ steps.setup_base.outputs.WORKSPACE_ROOT }}
+          ls ${{ steps.setup_base.outputs.WORKSPACE_ROOT }}
 
       - name: "𓋏 Run `npm run sanity-test`"
         continue-on-error: true
@@ -89,7 +111,7 @@ jobs:
       - name: Checkout actions
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha || github.ref }}
+          ref: ${{ github.event.pull_request.head.sha || github.head_ref || github.ref_name || github.ref }}
           sparse-checkout: |
             .github/actions
           path: actions
