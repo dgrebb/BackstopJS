@@ -38,7 +38,7 @@ jobs:
       - uses: ./actions/.github/actions/setup-base
         id: base
 
-      - uses: ./.github/actions/prepare-docker
+      - uses: ./actions/.github/actions/prepare-docker
 
       - name: "𓋏 Run `backstop test` in Docker"
         continue-on-error: true
@@ -75,7 +75,7 @@ jobs:
       - uses: ./actions/.github/actions/setup-base
         id: base
 
-      - uses: ./.github/actions/prepare-docker
+      - uses: ./actions/.github/actions/prepare-docker
 
       - name: "🎭 Run `backstop test --confg=playwright` in Docker"
         continue-on-error: true
