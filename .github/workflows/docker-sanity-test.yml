@@ -39,6 +39,8 @@ jobs:
         id: base
 
       - uses: ./actions/.github/actions/prepare-docker
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "𓋏 Run `backstop test` in Docker"
         continue-on-error: true

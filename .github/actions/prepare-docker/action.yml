@@ -1,6 +1,11 @@
 name: "Pull & Prepare Docker Workflow"
 description: "Sets name and tag, logs in to GHCR, and pulls Docker image."
 
+inputs:
+  GITHUB_TOKEN:
+    description: "GitHub Token"
+    required: true
+
 runs:
   using: "composite"
   steps:
@@ -20,7 +25,7 @@ runs:
       with:
         registry: ${{ env.REGISTRY }}
         username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ inputs.GITHUB_TOKEN }}
 
     - name: Pull Image
       shell: bash
