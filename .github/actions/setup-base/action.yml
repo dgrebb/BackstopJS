@@ -25,4 +25,4 @@ runs:
       shell: bash
       run: |
         git clone -b ${{ github.event.pull_request.head.sha || github.head_ref || github.ref_name || github.ref }} https://github.com/${{ github.repository }}.git .
-        ls ${{ steps.base.outputs.WORKSPACE_ROOT }}
+        ls -las
