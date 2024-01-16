@@ -53,6 +53,8 @@ runs:
         echo "</details>" >> $GITHUB_STEP_SUMMARY
 
     - name: "Report Validation Outcome"
+      shell: bash
+      working-directory: ${{ steps.base.outputs.WORKSPACE_ROOT }}
       run: |
         if [[ "$TEST_RESULT" != "" ]]; then
           exit 1
