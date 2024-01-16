@@ -36,6 +36,7 @@ runs:
     - name: ⬢ Setup Node & Cache
       uses: actions/setup-node@v4
       with:
+        node-version: $NODE_VERSION
         cache: "npm"
         cache-dependency-path: package-lock.json
 
