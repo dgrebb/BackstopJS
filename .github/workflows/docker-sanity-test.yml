@@ -35,8 +35,8 @@ jobs:
             .github/actions
           path: actions
 
-      - name: "Setup Node, npm Cache, and Install"
-        uses: ./.github/actions/setup-base
+      - uses: ./actions/.github/actions/setup-base
+        id: base
 
       - uses: ./.github/actions/prepare-docker
 
@@ -72,8 +72,8 @@ jobs:
             .github/actions
           path: actions
 
-      - name: "Setup Node, npm Cache, and Install"
-        uses: ./.github/actions/setup-base
+      - uses: ./actions/.github/actions/setup-base
+        id: base
 
       - uses: ./.github/actions/prepare-docker
 
