@@ -3,6 +3,7 @@ description: "Sets up Node, npm caching, and installs dependencies"
 
 inputs:
   WORKSPACE_ROOT:
+    description: "The workspace root."
     required: true
 
 runs:
@@ -13,9 +14,9 @@ runs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: "npm"
-        cache-dependency-path: ${{ steps.base.outputs.WORKSPACE_ROOT }}/package-lock.json
+        cache-dependency-path: ${{ inputs.WORKSPACE_ROOT }}/package-lock.json
 
     - name: ↧ Install
       shell: bash
-      working-directory: ${{ steps.base.outputs.WORKSPACE_ROOT }}
+      working-directory: ${{ inputs.WORKSPACE_ROOT }}
       run: npm ci
