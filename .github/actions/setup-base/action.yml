@@ -11,11 +11,6 @@ inputs:
     required: false
     default: "true"
 
-outputs:
-  WORKSPACE_ROOT:
-    description: "Export the root workspace for all workflows."
-    value: ${{ steps.workspace_root.outputs.WORKSPACE_ROOT }}
-
 runs:
   using: "composite"
   steps:
@@ -26,9 +21,8 @@ runs:
         limit-access-to-actor: true
         detached: ${{ inputs.DEBUG_DETACHED }}
 
-    - name: Set workspace root
-      id: workspace_root
+    - name: Checkout to workspace
       shell: bash
       run: |
-        WORKSPACE_ROOT=$GITHUB_WORKSPACE
-        echo "WORKSPACE_ROOT=$WORKSPACE_ROOT" | tee -a $GITHUB_OUTPUT
+        git clone -b ${{ github.event.pull_request.head.sha || github.head_ref || github.ref_name || github.ref }} https://github.com/${{ github.repository }}.git .
+        ls ${{ steps.base.outputs.WORKSPACE_ROOT }}
