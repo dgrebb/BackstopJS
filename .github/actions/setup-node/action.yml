@@ -6,11 +6,10 @@ runs:
   steps:
     - name: ⬢ Setup Node & Cache
       uses: actions/setup-node@v4
-      working-directory: ${{ steps.base.outputs.WORKSPACE_ROOT }}
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: "npm"
-        cache-dependency-path: package-lock.json
+        cache-dependency-path: ${{ steps.base.outputs.WORKSPACE_ROOT }}/package-lock.json
 
     - name: ↧ Install
       shell: bash
