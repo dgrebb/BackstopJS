@@ -43,7 +43,7 @@ jobs:
           DEBUG_ENABLED: ${{ inputs.DEBUG_ENABLED }}
           DEBUG_DETACHED: ${{ inputs.DEBUG_DETACHED }}
 
-      - uses: ./.github/actions/setup-node
+      - uses: ./actions/.github/actions/setup-node
         id: node
 
       - name: "𓋏 Run `npm run sanity-test`"
@@ -118,7 +118,7 @@ jobs:
           DEBUG_ENABLED: ${{ inputs.DEBUG_ENABLED }}
           DEBUG_DETACHED: ${{ inputs.DEBUG_DETACHED }}
 
-      - uses: ./.github/actions/setup-node
+      - uses: ./actions/.github/actions/setup-node
         id: node
 
       - name: "🎭 Run `npm run sanity-test-playwright`"
