@@ -31,17 +31,15 @@ runs:
       shell: bash
       run: |
 
-    - name: Checkout to workspace
-      shell: bash
-      run: |
-        rm -rf ${{ steps.base.outputs.WORKSPACE_ROOT }}/*
-        rm -rf ${{ steps.base.outputs.WORKSPACE_ROOT }}/*.*
-        git clone -b ${{ github.event.pull_request.head.sha || github.head_ref || github.ref_name || github.ref }} https://github.com/${{ github.repository }}.git ${{ steps.base.outputs.WORKSPACE_ROOT }}
-        ls ${{ steps.base.outputs.WORKSPACE_ROOT }}
-
     - name: Set workspace root
       id: workspace_root
       shell: bash
       run: |
         WORKSPACE_ROOT=$GITHUB_WORKSPACE/repo
         echo "WORKSPACE_ROOT=$WORKSPACE_ROOT" | tee -a $GITHUB_OUTPUT
+
+    - name: Checkout to workspace
+      shell: bash
+      run: |
+        git clone -b ${{ github.event.pull_request.head.sha || github.head_ref || github.ref_name || github.ref }} https://github.com/${{ github.repository }}.git ${{ steps.base.outputs.WORKSPACE_ROOT }}
+        ls ${{ steps.base.outputs.WORKSPACE_ROOT }}
