@@ -40,6 +40,8 @@ jobs:
 
       - uses: ./actions/.github/actions/prepare-docker
         with:
+          REGISTRY: ${{ env.REGISTRY }}
+          ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "𓋏 Run `backstop test` in Docker"
@@ -78,6 +80,10 @@ jobs:
         id: base
 
       - uses: ./actions/.github/actions/prepare-docker
+        with:
+          REGISTRY: ${{ env.REGISTRY }}
+          ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "🎭 Run `backstop test --confg=playwright` in Docker"
         continue-on-error: true

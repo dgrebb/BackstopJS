@@ -2,6 +2,12 @@ name: "Pull & Prepare Docker Workflow"
 description: "Sets name and tag, logs in to GHCR, and pulls Docker image."
 
 inputs:
+  REGISTRY:
+    description: "GitHub Registry"
+    required: true
+  ACTOR:
+    description: "GitHub Username"
+    required: true
   GITHUB_TOKEN:
     description: "GitHub Token"
     required: true
@@ -23,8 +29,8 @@ runs:
     - name: Log in to the Container registry
       uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
       with:
-        registry: ${{ env.REGISTRY }}
-        username: ${{ github.actor }}
+        registry: ${{ inputs.REGISTRY }}
+        username: ${{ inputs.ACTOR }}
         password: ${{ inputs.GITHUB_TOKEN }}
 
     - name: Pull Image
