@@ -1,16 +1,6 @@
 name: "Setup Base Workflow"
 description: "Checks out the BackstopJS repo at the calling or current branch with shallow history. Pulls Docker image by branch tag. Installs dependencies. Optionally sets up interactive remote debug shell."
 
-inputs:
-  DEBUG_ENABLED:
-    description: "Run the build with tmate debugging enabled (https://github.com/marketplace/actions/debugging-with-tmate)"
-    required: false
-    default: "false"
-  DEBUG_DETACHED:
-    description: "whether to launch tmate in detached mode (if the tmate action is run)"
-    required: false
-    default: "true"
-
 outputs:
   WORKSPACE_ROOT:
     description: "Export the root workspace for all workflows."
@@ -19,18 +9,6 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Setup tmate session
-      if: ${{ inputs.DEBUG_ENABLED }}
-      uses: mxschmitt/action-tmate@v3
-      with:
-        limit-access-to-actor: true
-        detached: ${{ inputs.DEBUG_DETACHED }}
-
-    - name: Print tmate session
-      if: ${{ inputs.DEBUG_ENABLED }}
-      shell: bash
-      run: |
-
     - name: Set workspace root
       id: workspace_root
       shell: bash

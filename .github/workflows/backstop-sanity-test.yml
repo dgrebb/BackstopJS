@@ -2,17 +2,6 @@ name: Sanity Test Checks
 
 on:
   workflow_dispatch:
-    inputs:
-      DEBUG_ENABLED:
-        description: "Run the build with tmate debugging enabled (https://github.com/marketplace/actions/debugging-with-tmate)"
-        type: boolean
-        required: false
-        default: false
-      DEBUG_DETACHED:
-        description: "whether to launch tmate in detached mode (if the tmate action is run)"
-        type: boolean
-        required: false
-        default: true
 
   workflow_call:
 
@@ -39,9 +28,6 @@ jobs:
 
       - uses: ./actions/.github/actions/setup-base
         id: base
-        with:
-          DEBUG_ENABLED: ${{ inputs.DEBUG_ENABLED }}
-          DEBUG_DETACHED: ${{ inputs.DEBUG_DETACHED }}
 
       - uses: ./actions/.github/actions/setup-node
         id: node
@@ -114,9 +100,6 @@ jobs:
 
       - uses: ./actions/.github/actions/setup-base
         id: base
-        with:
-          DEBUG_ENABLED: ${{ inputs.DEBUG_ENABLED }}
-          DEBUG_DETACHED: ${{ inputs.DEBUG_DETACHED }}
 
       - uses: ./actions/.github/actions/setup-node
         id: node
