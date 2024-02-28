@@ -1,4 +1,4 @@
-![npm@latest](https://img.shields.io/npm/v/backstopjs/latest.svg) ![GitHub Repo stars](https://img.shields.io/github/stars/garris/backstopjs) ![GitHub contributors](https://img.shields.io/github/contributors/garris/backstopjs) ![downloads](https://img.shields.io/npm/dy/backstopjs) [![Backstop Sanity Tests](https://github.com/garris/BackstopJS/actions/workflows/backstop-sanity-test.yml/badge.svg)](https://github.com/garris/BackstopJS/actions/workflows/backstop-sanity-test.yml)
+![npm@latest](https://img.shields.io/npm/v/backstopjs/latest.svg) ![GitHub Repo stars](https://img.shields.io/github/stars/garris/backstopjs) ![GitHub contributors](https://img.shields.io/github/contributors/garris/backstopjs) ![downloads](https://img.shields.io/npm/dy/backstopjs) [![Backstop CI](https://github.com/garris/BackstopJS/actions/workflows/_backstop-ci.yml/badge.svg)](https://github.com/garris/BackstopJS/actions/workflows/_backstop-ci.yml)
 
 
 
@@ -1158,14 +1158,14 @@ See the next section for running the SMOKE TEST -- Please make sure this is work
 Run the following command from your Desktop, home or project directory to check that Backstop will install and run in your environment. _Please make sure you have node version 8 or above. Windows users: Powershell is recommended._
 
 ```
-mkdir backstopSanityTest; cd backstopSanityTest; npm install backstopjs; ./node_modules/.bin/backstop init; ./node_modules/.bin/backstop test
+mkdir backstopSanityTest; cd backstopSanityTest; mkdir node_modules; npm install backstopjs; ./node_modules/.bin/backstop init; ./node_modules/.bin/backstop reference; ./node_modules/.bin/backstop test
 
 ```
 
 Here is a sanity test which also uses docker...
 
 ```
-mkdir backstopSanityTest; cd backstopSanityTest; npm install backstopjs; ./node_modules/.bin/backstop init; ./node_modules/.bin/backstop test --docker
+mkdir backstopSanityTest; cd backstopSanityTest; mkdir node_modules; npm install backstopjs; ./node_modules/.bin/backstop init; ./node_modules/.bin/backstop reference --docker; ./node_modules/.bin/backstop test --docker
 ```
 
 <!-- omit from toc -->

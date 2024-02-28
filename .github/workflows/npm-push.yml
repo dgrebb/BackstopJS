@@ -1,4 +1,4 @@
-name: Backstop Integration Tests
+name: 📦 NPM Push
 
 on:
   workflow_dispatch:
@@ -6,32 +6,33 @@ on:
 
 permissions:
   actions: write
+  checks: write
   contents: write
   pull-requests: write
-
+  packages: write
+  
 env:
+  BRANCH_NAME: ${{ github.event.pull_request.head.sha || github.head_ref || github.ref_name }}
   NODE_VERSION: 20
 
 jobs:
-  integration:
-    name: 🧩 Integration
+  publish:
     runs-on: ubuntu-latest
-    steps:
+    steps: 
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
           ref: ${{ github.event.pull_request.head.sha || github.ref }}
-
-      - name: ⬢ Setup Node & Cache
+          
+      - name: Setup Node & Cache
         uses: actions/setup-node@v4
         with:
           cache: "npm"
           cache-dependency-path: package-lock.json
-
-      - name: ↧ Install
-        run: npm ci
-
-      - name: "𓋏 Run `npm run integration-test`"
-        run: |
-          npm run integration-test
+      
+      - run: npm ci
+      
+      - uses: JS-DevTools/npm-publish@v3
+        with:
+          token: ${{ secrets.NPM_TOKEN }}

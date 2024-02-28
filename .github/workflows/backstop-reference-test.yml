@@ -1,10 +1,11 @@
-name: Build Compare Test
+name: 🛞 Backstop Reference Test
 
 on:
   workflow_dispatch:
   workflow_call:
 
 permissions:
+  actions: write
   contents: write
   pull-requests: write
 
@@ -12,8 +13,8 @@ env:
   NODE_VERSION: 20
 
 jobs:
-  build-compare:
-    name: 🚜 Build Compare
+  reference-test:
+    name: reference-test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,15 +23,16 @@ jobs:
           fetch-depth: 1
           ref: ${{ github.event.pull_request.head.sha || github.ref }}
 
-      - name: ⬢ Setup Node & Cache
+      - name: Setup Node & Cache
         uses: actions/setup-node@v4
         with:
           cache: "npm"
           cache-dependency-path: package-lock.json
 
-      - name: ↧ Install
+      - name: Install
         run: npm ci
 
-      - name: "Run `npm run build-compare`"
-        run: |
-          npm run build-compare
+      - name: "execute test"
+        run: npm run reference-test
+
+
