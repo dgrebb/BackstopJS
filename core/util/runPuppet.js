@@ -394,6 +394,7 @@ async function captureScreenshot (page, browser, selector, selectorMap, config, 
     ensureDirectoryPath(filePath); // logs in same dir
 
     try {
+      await page.waitForFunction(() => document.fonts.ready);
       await page.screenshot({
         path: filePath,
         fullPage

@@ -440,6 +440,7 @@ async function captureScreenshot (page, browserContext, selector, selectorMap, c
     ensureDirectoryPath(filePath);
 
     try {
+      await page.waitForFunction(() => document.fonts.ready);
       await page.screenshot({
         path: filePath,
         fullPage
